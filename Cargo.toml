@@ -1,0 +1,53 @@
+[package]
+name = "pleme-error"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Unified error handling library for Pleme platform"
+repository = "https://github.com/pleme-io/pleme-error"
+homepage = "https://github.com/pleme-io/pleme-error"
+readme = "README.md"
+
+[dependencies]
+thiserror = "2.0"
+uuid = { version = "1.11", features = ["serde", "v4"] }
+url = "2.5"
+anyhow = { version = "1.0", optional = true }
+serde = { version = "1.0", features = ["derive"], optional = true }
+serde_json = { version = "1.0", optional = true }
+async-graphql = { version = "7.0.17", features = ["apollo_tracing", "dataloader"], optional = true }
+axum = { version = "0.8.7", features = ["http1", "http2", "json", "query", "tokio", "tower-log"], optional = true }
+http = { version = "1.1", optional = true }
+tracing = { version = "0.1", optional = true }
+sqlx = { version = "0.8", default-features = false, features = ["chrono", "json", "macros", "migrate", "postgres", "runtime-tokio", "uuid"], optional = true }
+redis = { version = "0.24", features = ["connection-manager", "streams", "tokio-comp"], optional = true }
+
+[dev-dependencies]
+tokio = { version = "1.41", features = ["full"] }
+tokio-test = "0.4"
+rstest = "0.18"
+
+[features]
+default = []
+context = ["anyhow"]
+serialization = ["serde", "serde_json"]
+graphql = ["async-graphql", "serialization"]
+http-errors = ["axum", "http"]
+logging = ["tracing"]
+database = ["sqlx", "redis"]
+web = ["graphql", "http-errors", "logging"]
+full = ["context", "serialization", "graphql", "http-errors", "logging", "database"]
+
+[[example]]
+name = "basic_usage"
+required-features = []
+
+[[example]]
+name = "graphql_errors"
+required-features = ["graphql"]
+
+[[example]]
+name = "railway_oriented"
+required-features = ["context"]
+
+
