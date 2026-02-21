@@ -7,6 +7,8 @@ description = "Unified error handling library for Pleme platform"
 repository = "https://github.com/pleme-io/pleme-error"
 homepage = "https://github.com/pleme-io/pleme-error"
 readme = "README.md"
+keywords = ["error-handling", "errors", "thiserror", "graphql", "axum"]
+categories = ["rust-patterns"]
 
 [dependencies]
 thiserror = "2.0"
